@@ -1,6 +1,6 @@
-package domain;
+package application.domain;
 
-import exceptions.NoSuchSubRouteException;
+import application.exceptions.NoSuchSubRouteException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

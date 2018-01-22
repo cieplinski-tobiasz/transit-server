@@ -1,19 +1,42 @@
-package domain;
+package application.domain;
 
-import exceptions.NoSuchSubRouteException;
+import application.exceptions.NoSuchSubRouteException;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Entity
 public class Travel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+    @NotNull
+    @OneToOne
     private final Timetable timetable;
+    @NotNull
     private final LocalDate departureDate;
+    @OneToMany
     private final Set<Booking> bookings;
+    @ElementCollection
     private final Map<Leg, Integer> availableSeats;
+    @NotNull
+    @OneToOne
     private final Vehicle vehicle;
+    @OneToOne
     private Driver driver;
+
+    private Travel() {
+        this.timetable = null;
+        this.departureDate = null;
+        this.bookings = null;
+        this.availableSeats = null;
+        this.vehicle = null;
+        this.driver = null;
+    }
 
     public Travel(Timetable timetable, LocalDate departureDate, Vehicle vehicle) {
         this.timetable = timetable;
@@ -62,6 +85,10 @@ public class Travel {
 
     public boolean isDefined() {
         return driver != null;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Timetable getTimetable() {

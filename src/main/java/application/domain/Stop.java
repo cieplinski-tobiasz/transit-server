@@ -1,11 +1,29 @@
-package domain;
+package application.domain;
 
+import org.hibernate.annotations.Immutable;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+@Entity
+@Immutable
 public class Stop {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+    @NotNull
     private final String name;
     private final String description;
+    @NotNull
+    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
     private final Location location;
+
+    private Stop() {
+        this.name = null;
+        this.description = null;
+        this.location = null;
+    }
 
     public Stop(String name, String description, Location location) {
         this.name = name;
@@ -15,6 +33,10 @@ public class Stop {
 
     public Stop(String name, Location location) {
         this(name, null, location);
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {

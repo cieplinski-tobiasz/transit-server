@@ -1,9 +1,8 @@
-package domain;
+package application.domain;
 
-import exceptions.NoSuchSubRouteException;
+import application.exceptions.NoSuchSubRouteException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class TravelTest {
+class
+TravelTest {
     private Leg[] legs;
     private Stop startStop;
     private Stop midStop;

@@ -1,16 +1,34 @@
-package domain;
+package application.domain;
 
-import exceptions.NoSuchSubRouteException;
+import application.exceptions.NoSuchSubRouteException;
+import org.hibernate.annotations.Immutable;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Entity
+@Immutable
 public class Route {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+    @OneToMany
+    @NotNull
     private final List<Leg> legs;
+
+    private Route() {
+        this.legs = null;
+    }
 
     public Route(List<Leg> legs) {
         this.legs = legs;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Optional<Leg> getLegForDepartureStop(Stop stop) {
