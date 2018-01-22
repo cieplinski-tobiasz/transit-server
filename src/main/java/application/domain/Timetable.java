@@ -63,4 +63,25 @@ public class Timetable {
     public Route getRoute() {
         return route;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Timetable timetable = (Timetable) o;
+
+        if (!route.equals(timetable.route)) return false;
+        if (!departureTimeMap.equals(timetable.departureTimeMap)) return false;
+        return arrivalTimeMap.equals(timetable.arrivalTimeMap);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = route.hashCode();
+        result = 31 * result + departureTimeMap.hashCode();
+        result = 31 * result + arrivalTimeMap.hashCode();
+        return result;
+    }
 }

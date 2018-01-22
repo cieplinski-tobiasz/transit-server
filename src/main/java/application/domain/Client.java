@@ -40,4 +40,23 @@ public class Client {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        if (!name.equals(client.name)) return false;
+        return phoneNumber.equals(client.phoneNumber);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + phoneNumber.hashCode();
+        return result;
+    }
 }

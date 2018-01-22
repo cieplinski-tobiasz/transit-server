@@ -15,7 +15,7 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @NotNull
     private final List<Leg> legs;
 
@@ -58,6 +58,22 @@ public class Route {
     }
 
     public List<Leg> getLegs() {
-        return Collections.unmodifiableList(legs);
+        return legs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Route route = (Route) o;
+
+        return legs.equals(route.legs);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return legs.hashCode();
     }
 }

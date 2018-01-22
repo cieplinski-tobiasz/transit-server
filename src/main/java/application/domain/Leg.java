@@ -48,4 +48,25 @@ public class Leg {
     public Distance getDistance() {
         return distance;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Leg leg = (Leg) o;
+
+        if (!departureStop.equals(leg.departureStop)) return false;
+        if (!arrivalStop.equals(leg.arrivalStop)) return false;
+        return distance.equals(leg.distance);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = departureStop.hashCode();
+        result = 31 * result + arrivalStop.hashCode();
+        result = 31 * result + distance.hashCode();
+        return result;
+    }
 }

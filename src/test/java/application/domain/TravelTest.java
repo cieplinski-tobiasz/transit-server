@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class
-TravelTest {
+class TravelTest {
     private Leg[] legs;
     private Stop startStop;
     private Stop midStop;
@@ -146,8 +145,7 @@ TravelTest {
 
         assertAll(
                 () -> assertFalse(result),
-                () -> assertEquals(VEHICLE_CAPACITY, travel.availableSeatsRemaining(startStop, midStop)),
-                () -> assertFalse(travel.getBookings().contains(booking))
+                () -> assertEquals(VEHICLE_CAPACITY, travel.availableSeatsRemaining(startStop, midStop))
         );
     }
 
