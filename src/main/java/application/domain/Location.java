@@ -42,4 +42,23 @@ public class Location {
     public Optional<Coordinates> getCoordinates() {
         return Optional.ofNullable(coordinates);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        if (!address.equals(location.address)) return false;
+        return coordinates != null ? coordinates.equals(location.coordinates) : location.coordinates == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = address.hashCode();
+        result = 31 * result + (coordinates != null ? coordinates.hashCode() : 0);
+        return result;
+    }
 }

@@ -13,12 +13,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 class TimetableTest {
-    @Mock
     private Distance distance;
-    @Mock
     private Location location;
     private LocalTime localTime;
     private Route route;
@@ -30,6 +29,8 @@ class TimetableTest {
 
     @BeforeEach
     public void setUp() throws Exception {
+        distance = mock(Distance.class);
+        location = mock(Location.class);
         startStop = new Stop("1", "d1", location);
         legs = new Leg[]{
                 new Leg(startStop, new Stop("2", "d2", location), distance),

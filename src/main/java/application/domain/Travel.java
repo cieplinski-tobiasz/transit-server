@@ -32,7 +32,7 @@ public class Travel {
     private Travel() {
         this.timetable = null;
         this.departureDate = null;
-        this.bookings = null;
+        this.bookings = new HashSet<>();
         this.availableSeats = null;
         this.vehicle = null;
         this.driver = null;
@@ -99,8 +99,8 @@ public class Travel {
         return departureDate;
     }
 
-    public Collection<Booking> getBookings() {
-        return Collections.unmodifiableCollection(bookings);
+    public Set<Booking> getBookings() {
+        return bookings;
     }
 
     public Driver getDriver() {
@@ -130,5 +130,32 @@ public class Travel {
         } catch (NoSuchSubRouteException e) {
             // asserting no exception
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Travel travel = (Travel) o;
+
+        if (!timetable.equals(travel.timetable)) return false;
+        if (!departureDate.equals(travel.departureDate)) return false;
+        if (bookings != null ? !bookings.equals(travel.bookings) : travel.bookings != null) return false;
+        if (!availableSeats.equals(travel.availableSeats)) return false;
+        if (!vehicle.equals(travel.vehicle)) return false;
+        return driver != null ? driver.equals(travel.driver) : travel.driver == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = timetable.hashCode();
+        result = 31 * result + departureDate.hashCode();
+        result = 31 * result + (bookings != null ? bookings.hashCode() : 0);
+        result = 31 * result + availableSeats.hashCode();
+        result = 31 * result + vehicle.hashCode();
+        result = 31 * result + (driver != null ? driver.hashCode() : 0);
+        return result;
     }
 }

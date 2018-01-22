@@ -57,4 +57,27 @@ public class Booking {
     public int getBookedSeats() {
         return bookedSeats;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Booking booking = (Booking) o;
+
+        if (bookedSeats != booking.bookedSeats) return false;
+        if (!client.equals(booking.client)) return false;
+        if (!from.equals(booking.from)) return false;
+        return to.equals(booking.to);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = client.hashCode();
+        result = 31 * result + from.hashCode();
+        result = 31 * result + to.hashCode();
+        result = 31 * result + bookedSeats;
+        return result;
+    }
 }
