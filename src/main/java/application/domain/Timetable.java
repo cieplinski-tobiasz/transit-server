@@ -1,18 +1,43 @@
-package domain;
+package application.domain;
 
+import org.hibernate.annotations.Immutable;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.Optional;
 
+@Entity
+@Immutable
 public class Timetable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+    @NotNull
+    @OneToOne
     private final Route route;
+    @NotNull
+    @ElementCollection
     private final Map<Leg, LocalTime> departureTimeMap;
+    @NotNull
+    @ElementCollection
     private final Map<Leg, LocalTime> arrivalTimeMap;
+
+    private Timetable() {
+        this.route = null;
+        this.departureTimeMap = null;
+        this.arrivalTimeMap = null;
+    }
 
     public Timetable(Route route, Map<Leg, LocalTime> departureTimeMap, Map<Leg, LocalTime> arrivalTimeMap) {
         this.route = route;
         this.departureTimeMap = departureTimeMap;
         this.arrivalTimeMap = arrivalTimeMap;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Optional<LocalTime> getDepartureTimeForStop(Stop stop) {
