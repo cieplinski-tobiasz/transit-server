@@ -140,7 +140,7 @@ public class BookingServiceTest {
         BookingService bookingService = new BookingService(bookingRepository, travelRepository);
         bookingService.addBookingToTravelById(booking, travels.get(0).getId());
 
-        boolean result = bookingService.removeBookingFromTravelById(booking, travels.get(0).getId());
+        boolean result = bookingService.removeBookingByIdFromTravelById(booking.getId(), travels.get(0).getId());
 
         assertAll(
                 () -> assertTrue(result),

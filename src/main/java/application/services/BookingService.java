@@ -48,12 +48,13 @@ public class BookingService {
         }
     }
 
-    public boolean removeBookingFromTravelById(Booking booking, Long travelId) {
+    public boolean removeBookingByIdFromTravelById(Long bookingId, Long travelId) {
         Optional<Travel> travel = travelRepository.findById(travelId);
+        Optional<Booking> booking = bookingRepository.findById(bookingId);
 
-        if (travel.isPresent() && travel.get().removeBooking(booking)) {
+        if (travel.isPresent() && booking.isPresent() && travel.get().removeBooking(booking.get())) {
             travelRepository.save(travel.get());
-            bookingRepository.delete(booking);
+            bookingRepository.delete(booking.get());
             return true;
         } else {
             return false;

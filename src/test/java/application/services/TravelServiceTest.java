@@ -116,7 +116,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getAllTravelsTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         List<Travel> allTravels = travelService.getAllTravels();
 
@@ -126,7 +126,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelByIdGivenTravelPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         Optional<Travel> result = travelService.getTravelById(travels.get(0).getId());
 
@@ -139,7 +139,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelByIdGivenTravelIsNotPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         Optional<Travel> result = travelService.getTravelById(noSuchTravel.getId());
 
@@ -149,7 +149,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelByIdGivenArgumentIsNullTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         assertThrows(
                 IllegalArgumentException.class,
@@ -160,9 +160,9 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByDriverGivenDriverIsPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
-        List<Travel> result = travelService.getTravelsByDriver(driver);
+        List<Travel> result = travelService.getTravelsByDriverId(driver.getId());
 
         assertThat(result, containsInAnyOrder(travels.subList(0, 2).toArray(new Travel[2])));
     }
@@ -170,10 +170,10 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByDriverGivenDriverIsNotPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
         Driver noSuchDriver = new Driver("no such driver", "1234");
 
-        List<Travel> result = travelService.getTravelsByDriver(noSuchDriver);
+        List<Travel> result = travelService.getTravelsByDriverId(noSuchDriver.getId());
 
         assertTrue(result.isEmpty());
     }
@@ -181,18 +181,18 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByDriverGivenNullArgumentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> travelService.getTravelsByDriver(null)
+                () -> travelService.getTravelsByDriverId(null)
         );
     }
 
     @Test
     @Transactional
     void getTravelsByMonthGivenTravelsPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         List<Travel> result = travelService.getTravelsByMonth(Month.DECEMBER);
 
@@ -202,7 +202,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByMonthGivenTravelsNotPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         List<Travel> result = travelService.getTravelsByMonth(Month.APRIL);
 
@@ -212,7 +212,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByMonthGivenNullArgumentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         assertThrows(
                 IllegalArgumentException.class,
@@ -223,9 +223,9 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByDriverAndMonthGivenValidArgumentsTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
-        List<Travel> result = travelService.getTravelsByDriverAndMonth(driver, Month.DECEMBER);
+        List<Travel> result = travelService.getTravelsByDriverAndMonth(driver.getId(), Month.DECEMBER);
 
         assertThat(result, containsInAnyOrder(travels.subList(0, 2).toArray(new Travel[2])));
     }
@@ -233,7 +233,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByDriverAndMonthGivenNullArgumentsTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         assertThrows(
                 IllegalArgumentException.class,
@@ -244,9 +244,9 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void getTravelsByDriverAndMonthGivenNoSuchTravelsTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
-        List<Travel> result = travelService.getTravelsByDriverAndMonth(driver, Month.APRIL);
+        List<Travel> result = travelService.getTravelsByDriverAndMonth(driver.getId(), Month.APRIL);
 
         assertTrue(result.isEmpty());
     }
@@ -254,7 +254,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void addTravelGivenTravelPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         boolean result = travelService.addTravel(travels.get(0));
 
@@ -264,7 +264,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void addTravelGivenTravelIsNotPresentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         boolean result = travelService.addTravel(noSuchTravel);
 
@@ -277,7 +277,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void addTravelGivenNullArgumentTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         assertThrows(
                 IllegalArgumentException.class,
@@ -288,7 +288,7 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void setDriverForTravelGivenNullArgumentsTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
         assertThrows(
                 IllegalArgumentException.class,
@@ -299,10 +299,10 @@ public class TravelServiceTest {
     @Test
     @Transactional
     void setDriverForTravelGivenNoSuchTravelTest() {
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
 
-        boolean result = travelService.setDriverForTravelWithId(noSuchTravel.getId(), driver);
+        boolean result = travelService.setDriverForTravelWithId(noSuchTravel.getId(), driver.getId());
 
         assertFalse(result);
     }
@@ -312,9 +312,9 @@ public class TravelServiceTest {
     void setDriverForTravelGivenValidArgumentsTest() {
         Driver newDriver = new Driver("driver2", "123456");
         driverRepository.save(newDriver);
-        TravelService travelService = new TravelService(travelRepository);
+        TravelService travelService = new TravelService(travelRepository, driverRepository);
 
-        boolean result = travelService.setDriverForTravelWithId(travels.get(0).getId(), newDriver);
+        boolean result = travelService.setDriverForTravelWithId(travels.get(0).getId(), newDriver.getId());
 
         assertAll(
                 () -> assertTrue(result),

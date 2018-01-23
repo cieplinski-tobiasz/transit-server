@@ -1,5 +1,6 @@
 package application.services;
 
+import application.dao.DriverRepository;
 import application.dao.TravelRepository;
 import application.domain.Driver;
 import application.domain.Travel;
@@ -10,6 +11,7 @@ import org.springframework.util.Assert;
 
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +21,14 @@ import java.util.stream.Collectors;
 @Transactional
 public class TravelService {
     private TravelRepository travelRepository;
+    private DriverRepository driverRepository;
 
     @Autowired
-    public TravelService(TravelRepository travelRepository) {
+    public TravelService(@Autowired TravelRepository travelRepository, @Autowired DriverRepository driverRepository) {
+        Assert.notNull(travelRepository, "TravelRepository cannot be null.");
+        Assert.notNull(driverRepository, "DriverRepository cannot be null.");
         this.travelRepository = travelRepository;
+        this.driverRepository = driverRepository;
     }
 
     public List<Travel> getAllTravels() {
@@ -36,11 +42,18 @@ public class TravelService {
         return travelRepository.findById(id);
     }
 
-    public List<Travel> getTravelsByDriver(Driver driver) {
-        Assert.notNull(driver, "Driver must not be null.");
-        return getAllTravels().stream()
-                .filter(travel -> travel.getDriver() != null && travel.getDriver().equals(driver))
-                .collect(Collectors.toList());
+    public List<Travel> getTravelsByDriverId(Long id) {
+        Assert.notNull(id, "ID must not be null.");
+
+        Optional<Driver> driver = driverRepository.findById(id);
+
+        if (driver.isPresent()) {
+            return getAllTravels().stream()
+                    .filter(travel -> travel.getDriver() != null && travel.getDriver().equals(driver.get()))
+                    .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public List<Travel> getTravelsByMonth(Month month) {
@@ -50,15 +63,22 @@ public class TravelService {
                 .collect(Collectors.toList());
     }
 
-    public List<Travel> getTravelsByDriverAndMonth(Driver driver, Month month) {
-        Assert.notNull(driver, "Driver must not be null.");
+    public List<Travel> getTravelsByDriverAndMonth(Long id, Month month) {
+        Assert.notNull(id, "Id must not be null.");
         Assert.notNull(month, "Month must not be null.");
-        return getAllTravels().stream()
-                .filter(
-                        travel -> travel.getDriver() != null
-                                && travel.getDriver().equals(driver)
-                                && travel.getDepartureDate().getMonth().equals(month)
-                ).collect(Collectors.toList());
+
+        Optional<Driver> driver = driverRepository.findById(id);
+
+        if (driver.isPresent()) {
+            return getAllTravels().stream()
+                    .filter(
+                            travel -> travel.getDriver() != null
+                                    && travel.getDriver().equals(driver.get())
+                                    && travel.getDepartureDate().getMonth().equals(month)
+                    ).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public boolean addTravel(Travel travel) {
@@ -71,11 +91,12 @@ public class TravelService {
         }
     }
 
-    public boolean setDriverForTravelWithId(Long id, Driver driver) {
-        Assert.notNull(id, "ID must not be null.");
-        Assert.notNull(driver, "Driver must not be null.");
-        if (travelRepository.existsById(id)) {
-            travelRepository.findById(id).ifPresent(t -> t.setDriver(driver));
+    public boolean setDriverForTravelWithId(Long travelId, Long driverId) {
+        Assert.notNull(travelId, "Travel ID must not be null.");
+        Assert.notNull(driverId, "Driver ID must not be null.");
+        if (travelRepository.existsById(travelId) && driverRepository.existsById(driverId)) {
+            travelRepository.findById(travelId)
+                    .ifPresent(t -> t.setDriver(driverRepository.findById(driverId).get()));
             return true;
         } else {
             return false;
