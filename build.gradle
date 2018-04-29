@@ -1,0 +1,37 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.gmail.cieplinskit'
+version = '0.1'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+        
+     maven { url "https://repo.spring.io/libs-snapshot" }
+     maven { url "https://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.0.BUILD-SNAPSHOT'
+    compile group: 'org.mockito', name: 'mockito-core', version:'2.13.0'
+    compile(group: 'org.hibernate', name: 'hibernate-core', version:'5.2.12.Final') {
+exclude(module: 'xml-apis')
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'2.0.0.BUILD-SNAPSHOT'
+    compile group: 'com.h2database', name: 'h2', version:'1.4.196'
+    testCompile group: 'org.junit.platform', name: 'junit-platform-runner', version:'1.0.2'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version:'5.0.2'
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.0.0.BUILD-SNAPSHOT') {
+exclude(module: 'junit')
+    }
+    testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:'1.3'
+}
