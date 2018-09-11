@@ -14,12 +14,15 @@ public class Timetable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     @OneToOne
     private final Route route;
+
     @NotNull
     @ElementCollection
     private final Map<Leg, LocalTime> departureTimeMap;
+
     @NotNull
     @ElementCollection
     private final Map<Leg, LocalTime> arrivalTimeMap;
@@ -41,19 +44,13 @@ public class Timetable {
     }
 
     public Optional<LocalTime> getDepartureTimeForStop(Stop stop) {
-        Optional<Leg> departureLeg = route.getLegForDepartureStop(stop);
-
-        return departureLeg.isPresent() ?
-                Optional.ofNullable(arrivalTimeMap.get(departureLeg.get())) :
-                Optional.empty();
+        return route.getLegForDepartureStop(stop)
+                .map(departureTimeMap::get);
     }
 
     public Optional<LocalTime> getArrivalTimeForStop(Stop stop) {
-        Optional<Leg> departureLeg = route.getLegForArrivalStop(stop);
-
-        return departureLeg.isPresent() ?
-                Optional.ofNullable(arrivalTimeMap.get(departureLeg.get())) :
-                Optional.empty();
+        return route.getLegForArrivalStop(stop)
+                .map(arrivalTimeMap::get);
     }
 
     public Optional<LocalTime> getDepartureTimeForLeg(Leg leg) { return Optional.ofNullable(departureTimeMap.get(leg)); }
@@ -74,7 +71,6 @@ public class Timetable {
         if (!route.equals(timetable.route)) return false;
         if (!departureTimeMap.equals(timetable.departureTimeMap)) return false;
         return arrivalTimeMap.equals(timetable.arrivalTimeMap);
-
     }
 
     @Override

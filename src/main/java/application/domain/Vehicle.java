@@ -14,8 +14,10 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     private String name;
+
     @NotNull
     private int capacity;
 

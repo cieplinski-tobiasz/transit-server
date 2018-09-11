@@ -7,20 +7,23 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Immutable
-@Table(name = "BOOKING")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @NotNull
     private final Client client;
+
     @NotNull
     @OneToOne
     private final Stop from;
+
     @NotNull
     @OneToOne
     private final Stop to;
+
     @NotNull
     private final int bookedSeats;
 

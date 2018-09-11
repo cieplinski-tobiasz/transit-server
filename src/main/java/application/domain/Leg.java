@@ -11,14 +11,16 @@ public class Leg {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     @OneToOne
     private final Stop departureStop;
+
     @NotNull
     @OneToOne
     private final Stop arrivalStop;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @NotNull
+
+    @Embedded
     private final Distance distance;
 
     private Leg() {

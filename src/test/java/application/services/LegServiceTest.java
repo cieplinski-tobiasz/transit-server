@@ -1,15 +1,14 @@
 package application.services;
 
 import application.Main;
-import application.dao.LegRepository;
-import application.dao.StopRepository;
+import application.repositories.LegRepository;
+import application.repositories.StopRepository;
 import application.domain.Distance;
 import application.domain.Leg;
 import application.domain.Location;
 import application.domain.Stop;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

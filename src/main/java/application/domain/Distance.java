@@ -2,17 +2,11 @@ package application.domain;
 
 import org.hibernate.annotations.Immutable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Embeddable
 @Immutable
 public class Distance {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
     private final double kilometers;
 
     private Distance() {
@@ -23,10 +17,6 @@ public class Distance {
         this.kilometers = kilometers;
     }
 
-    public double getKilometers() {
-        return kilometers;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,7 +25,6 @@ public class Distance {
         Distance distance = (Distance) o;
 
         return Double.compare(distance.kilometers, kilometers) == 0;
-
     }
 
     @Override

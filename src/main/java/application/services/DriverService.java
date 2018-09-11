@@ -1,6 +1,6 @@
 package application.services;
 
-import application.dao.DriverRepository;
+import application.repositories.DriverRepository;
 import application.domain.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

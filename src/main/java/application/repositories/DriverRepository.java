@@ -1,4 +1,4 @@
-package application.dao;
+package application.repositories;
 
 import application.domain.Driver;
 import org.springframework.data.repository.CrudRepository;

@@ -15,6 +15,7 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @OneToMany(fetch = FetchType.EAGER)
     @NotNull
     private final List<Leg> legs;
@@ -69,7 +70,6 @@ public class Route {
         Route route = (Route) o;
 
         return legs.equals(route.legs);
-
     }
 
     @Override

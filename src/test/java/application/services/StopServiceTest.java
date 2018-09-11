@@ -1,14 +1,11 @@
 package application.services;
 
 import application.Main;
-import application.dao.DriverRepository;
-import application.dao.StopRepository;
-import application.domain.Driver;
+import application.repositories.StopRepository;
 import application.domain.Location;
 import application.domain.Stop;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

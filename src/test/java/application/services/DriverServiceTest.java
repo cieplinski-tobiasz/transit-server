@@ -1,7 +1,7 @@
 package application.services;
 
 import application.Main;
-import application.dao.DriverRepository;
+import application.repositories.DriverRepository;
 import application.domain.Driver;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Assert;

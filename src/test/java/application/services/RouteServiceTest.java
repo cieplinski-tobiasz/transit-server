@@ -1,13 +1,12 @@
 package application.services;
 
 import application.Main;
-import application.dao.LegRepository;
-import application.dao.RouteRepository;
-import application.dao.StopRepository;
+import application.repositories.LegRepository;
+import application.repositories.RouteRepository;
+import application.repositories.StopRepository;
 import application.domain.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

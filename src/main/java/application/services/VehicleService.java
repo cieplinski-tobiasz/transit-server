@@ -1,8 +1,6 @@
 package application.services;
 
-import application.dao.DriverRepository;
-import application.dao.VehicleRepository;
-import application.domain.Driver;
+import application.repositories.VehicleRepository;
 import application.domain.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

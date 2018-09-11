@@ -1,6 +1,6 @@
 package application.services;
 
-import application.dao.TravelRepository;
+import application.repositories.TravelRepository;
 import application.domain.Driver;
 import application.domain.Travel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.time.LocalTime;
 import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;

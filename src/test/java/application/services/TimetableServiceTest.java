@@ -1,10 +1,10 @@
 package application.services;
 
 import application.Main;
-import application.dao.LegRepository;
-import application.dao.RouteRepository;
-import application.dao.StopRepository;
-import application.dao.TimetableRepository;
+import application.repositories.LegRepository;
+import application.repositories.RouteRepository;
+import application.repositories.StopRepository;
+import application.repositories.TimetableRepository;
 import application.domain.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

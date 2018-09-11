@@ -1,6 +1,6 @@
 package application.services;
 
-import application.dao.TimetableRepository;
+import application.repositories.TimetableRepository;
 import application.domain.Timetable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

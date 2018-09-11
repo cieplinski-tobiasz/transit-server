@@ -1,10 +1,8 @@
 package application.services;
 
 import application.Main;
-import application.dao.*;
+import application.repositories.*;
 import application.domain.*;
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package application.dao;
+package application.repositories;
 
 import application.domain.Route;
 import org.springframework.data.repository.CrudRepository;

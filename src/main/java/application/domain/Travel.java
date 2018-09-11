@@ -14,18 +14,24 @@ public class Travel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     @OneToOne
     private final Timetable timetable;
+
     @NotNull
     private final LocalDate departureDate;
+
     @OneToMany
     private final Set<Booking> bookings;
+
     @ElementCollection
     private final Map<Leg, Integer> availableSeats;
+
     @NotNull
     @OneToOne
     private final Vehicle vehicle;
+
     @OneToOne
     private Driver driver;
 

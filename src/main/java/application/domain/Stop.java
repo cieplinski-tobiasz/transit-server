@@ -12,11 +12,14 @@ public class Stop {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     private final String name;
+
     private final String description;
+
     @NotNull
-    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private final Location location;
 
     private Stop() {

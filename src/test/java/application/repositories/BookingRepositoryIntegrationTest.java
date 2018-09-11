@@ -1,4 +1,4 @@
-package application.dao;
+package application.repositories;
 
 import application.Main;
 import application.domain.Booking;

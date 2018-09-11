@@ -12,9 +12,11 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     private final String address;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @Embedded
     private final Coordinates coordinates;
 
     private Location() {

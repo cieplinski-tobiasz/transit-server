@@ -1,6 +1,6 @@
 package application.services;
 
-import application.dao.StopRepository;
+import application.repositories.StopRepository;
 import application.domain.Stop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
