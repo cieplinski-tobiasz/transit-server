@@ -18,7 +18,6 @@ public class Vehicle {
     @NotNull
     private String name;
 
-    @NotNull
     private int capacity;
 
     private Vehicle() {
@@ -31,10 +30,6 @@ public class Vehicle {
 
     public long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getCapacity() {

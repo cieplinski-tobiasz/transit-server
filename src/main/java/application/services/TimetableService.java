@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class TimetableService {
-    private TimetableRepository timetableRepository;
+    private final TimetableRepository timetableRepository;
 
     @Autowired
     public TimetableService(TimetableRepository timetableRepository) {
         Assert.notNull(timetableRepository, "Timetable repository cannot be null.");
+
         this.timetableRepository = timetableRepository;
     }
 
@@ -28,13 +28,14 @@ public class TimetableService {
         return timetableList;
     }
 
-    public Optional<Timetable> getTimetableById(Long id) {
-        Assert.notNull(id, "ID cannot be null.");
+    public Optional<Timetable> getTimetableById(final long id) {
         return timetableRepository.findById(id);
     }
 
-    public boolean addTimetable(Timetable timetable) {
+    @Transactional
+    public boolean addTimetable(final Timetable timetable) {
         Assert.notNull(timetable, "Timetable cannot be null.");
+
         if (!timetableRepository.existsById(timetable.getId())) {
             timetableRepository.save(timetable);
             return true;

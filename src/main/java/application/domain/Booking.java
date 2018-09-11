@@ -45,10 +45,6 @@ public class Booking {
         return id;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
     public Stop getFrom() {
         return from;
     }
@@ -72,7 +68,6 @@ public class Booking {
         if (!client.equals(booking.client)) return false;
         if (!from.equals(booking.from)) return false;
         return to.equals(booking.to);
-
     }
 
     @Override

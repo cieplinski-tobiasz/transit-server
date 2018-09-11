@@ -16,10 +16,9 @@ public class Stop {
     @NotNull
     private final String name;
 
-    private final String description;
+    private String description;
 
-    @NotNull
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @Embedded
     private final Location location;
 
     private Stop() {
@@ -42,16 +41,8 @@ public class Stop {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Optional<String> getDescription() {
         return Optional.ofNullable(description);
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     @Override
@@ -64,7 +55,6 @@ public class Stop {
         if (!name.equals(stop.name)) return false;
         if (description != null ? !description.equals(stop.description) : stop.description != null) return false;
         return location.equals(stop.location);
-
     }
 
     @Override

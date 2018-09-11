@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class StopService {
-    private StopRepository stopRepository;
+    private final StopRepository stopRepository;
 
     @Autowired
     public StopService(StopRepository stopRepository) {
         Assert.notNull(stopRepository, "Stop repository cannot be null.");
+
         this.stopRepository = stopRepository;
     }
 
@@ -28,13 +28,14 @@ public class StopService {
         return stopList;
     }
 
-    public Optional<Stop> getStopById(Long id) {
-        Assert.notNull(id, "ID cannot be null.");
+    public Optional<Stop> getStopById(final long id) {
         return stopRepository.findById(id);
     }
 
-    public boolean addStop(Stop stop) {
+    @Transactional
+    public boolean addStop(final Stop stop) {
         Assert.notNull(stop, "Stop cannot be null.");
+
         if (!stopRepository.existsById(stop.getId())) {
             stopRepository.save(stop);
             return true;

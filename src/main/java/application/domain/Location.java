@@ -6,13 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
-@Entity
+@Embeddable
 @Immutable
 public class Location {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
-
     @NotNull
     private final String address;
 
@@ -31,18 +27,6 @@ public class Location {
 
     public Location(String address) {
         this(address, null);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Optional<Coordinates> getCoordinates() {
-        return Optional.ofNullable(coordinates);
     }
 
     @Override

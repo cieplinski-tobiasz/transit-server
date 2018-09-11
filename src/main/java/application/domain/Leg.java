@@ -39,16 +39,12 @@ public class Leg {
         return id;
     }
 
-    public Stop getDepartureStop() {
-        return departureStop;
+    public boolean isDepartingFrom(Stop stop) {
+        return this.departureStop.equals(stop);
     }
 
-    public Stop getArrivalStop() {
-        return arrivalStop;
-    }
-
-    public Distance getDistance() {
-        return distance;
+    public boolean isArrivingTo(Stop stop) {
+        return this.arrivalStop.equals(stop);
     }
 
     @Override

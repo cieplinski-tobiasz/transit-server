@@ -13,28 +13,24 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@Transactional
 public class BookingService {
-    private BookingRepository bookingRepository;
-    private TravelRepository travelRepository;
+    private final BookingRepository bookingRepository;
+    private final TravelRepository travelRepository;
 
     @Autowired
-    public BookingService(@Autowired BookingRepository bookingRepository, @Autowired TravelRepository travelRepository) {
+    public BookingService(BookingRepository bookingRepository, TravelRepository travelRepository) {
         this.bookingRepository = bookingRepository;
         this.travelRepository = travelRepository;
     }
 
-    public Set<Booking> getBookingsByTravelId(Long id) {
-        Optional<Travel> travel = travelRepository.findById(id);
-
-        if (travel.isPresent()) {
-            return travel.get().getBookings();
-        } else {
-            return Collections.emptySet();
-        }
+    public Set<Booking> getBookingsByTravelId(final long id) {
+        return travelRepository.findById(id)
+                .map(Travel::getBookings)
+                .orElse(Collections.emptySet());
     }
 
-    public boolean addBookingToTravelById(Booking booking, Long travelId) {
+    @Transactional
+    public boolean addBookingToTravelById(final Booking booking, final long travelId) {
         Optional<Travel> travel = travelRepository.findById(travelId);
 
         if (travel.isPresent() && travel.get().addBooking(booking)) {
@@ -46,7 +42,8 @@ public class BookingService {
         }
     }
 
-    public boolean removeBookingFromTravelById(Booking booking, Long travelId) {
+    @Transactional
+    public boolean removeBookingFromTravelById(final Booking booking, final long travelId) {
         Optional<Travel> travel = travelRepository.findById(travelId);
 
         if (travel.isPresent() && travel.get().removeBooking(booking)) {

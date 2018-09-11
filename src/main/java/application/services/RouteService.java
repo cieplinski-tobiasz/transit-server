@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class RouteService {
-    private RouteRepository routeRepository;
+    private final RouteRepository routeRepository;
 
     @Autowired
     public RouteService(RouteRepository routeRepository) {
@@ -27,13 +26,14 @@ public class RouteService {
         return routeList;
     }
 
-    public Optional<Route> getRouteById(Long id) {
-        Assert.notNull(id, "ID cannot be null.");
+    public Optional<Route> getRouteById(final Long id) {
         return routeRepository.findById(id);
     }
 
-    public boolean addRoute(Route route) {
+    @Transactional
+    public boolean addRoute(final Route route) {
         Assert.notNull(route, "Route cannot be null.");
+
         if (!routeRepository.existsById(route.getId())) {
             routeRepository.save(route);
             return true;

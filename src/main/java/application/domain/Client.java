@@ -14,8 +14,10 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
     @NotNull
     private final String name;
+
     @NotNull
     private final String phoneNumber;
 
@@ -31,14 +33,6 @@ public class Client {
 
     public long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     @Override

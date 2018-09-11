@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class DriverService {
-    private DriverRepository driverRepository;
+    private final DriverRepository driverRepository;
 
     @Autowired
     public DriverService(DriverRepository driverRepository) {
@@ -28,13 +28,14 @@ public class DriverService {
         return driversList;
     }
 
-    public Optional<Driver> getDriverById(Long id) {
-        Assert.notNull(id, "ID cannot be null.");
+    public Optional<Driver> getDriverById(final long id) {
         return driverRepository.findById(id);
     }
 
-    public boolean addDriver(Driver driver) {
+    @Transactional
+    public boolean addDriver(final Driver driver) {
         Assert.notNull(driver, "Driver must not be null");
+
         if (!driverRepository.existsById(driver.getId())) {
             driverRepository.save(driver);
             return true;

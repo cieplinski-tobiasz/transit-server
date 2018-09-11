@@ -8,10 +8,7 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 @Immutable
 public class Coordinates {
-    @NotNull
     private final double latitude;
-
-    @NotNull
     private final double longitude;
 
     private Coordinates() {

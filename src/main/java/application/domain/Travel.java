@@ -1,10 +1,12 @@
 package application.domain;
 
 import application.exceptions.NoSuchSubRouteException;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -89,6 +91,18 @@ public class Travel {
         }
     }
 
+    public boolean isInMonth(final Month month) {
+        Assert.notNull(month, "Month must not be null.");
+
+        return departureDate.getMonth().equals(month);
+    }
+
+    public boolean hasDriver(final Driver driver) {
+        Assert.notNull(driver, "Driver must not be null.");
+
+        return driver.equals(this.driver);
+    }
+
     public boolean isDefined() {
         return driver != null;
     }
@@ -97,24 +111,8 @@ public class Travel {
         return id;
     }
 
-    public Timetable getTimetable() {
-        return timetable;
-    }
-
-    public LocalDate getDepartureDate() {
-        return departureDate;
-    }
-
     public Set<Booking> getBookings() {
         return bookings;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
     }
 
     public void setDriver(Driver driver) {

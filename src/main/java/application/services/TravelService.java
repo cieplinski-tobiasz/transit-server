@@ -11,13 +11,13 @@ import org.springframework.util.Assert;
 import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class TravelService {
-    private TravelRepository travelRepository;
+    private final TravelRepository travelRepository;
 
     @Autowired
     public TravelService(TravelRepository travelRepository) {
@@ -30,38 +30,40 @@ public class TravelService {
         return travels;
     }
 
-    public Optional<Travel> getTravelById(Long id) {
-        Assert.notNull(id, "ID must not be null.");
+    public Optional<Travel> getTravelById(final long id) {
         return travelRepository.findById(id);
     }
 
-    public List<Travel> getTravelsByDriver(Driver driver) {
+    public List<Travel> getTravelsByDriver(final Driver driver) {
         Assert.notNull(driver, "Driver must not be null.");
+
         return getAllTravels().stream()
-                .filter(travel -> travel.getDriver() != null && travel.getDriver().equals(driver))
+                .filter(travel -> travel.hasDriver(driver))
                 .collect(Collectors.toList());
     }
 
-    public List<Travel> getTravelsByMonth(Month month) {
+    public List<Travel> getTravelsByMonth(final Month month) {
         Assert.notNull(month, "Month must not be null.");
+
         return getAllTravels().stream()
-                .filter(travel -> travel.getDepartureDate().getMonth().equals(month))
+                .filter(travel -> travel.isInMonth(month))
                 .collect(Collectors.toList());
     }
 
-    public List<Travel> getTravelsByDriverAndMonth(Driver driver, Month month) {
+    public List<Travel> getTravelsByDriverAndMonth(final Driver driver, final Month month) {
         Assert.notNull(driver, "Driver must not be null.");
         Assert.notNull(month, "Month must not be null.");
+
         return getAllTravels().stream()
-                .filter(
-                        travel -> travel.getDriver() != null
-                                && travel.getDriver().equals(driver)
-                                && travel.getDepartureDate().getMonth().equals(month)
-                ).collect(Collectors.toList());
+                .filter(travel -> travel.hasDriver(driver))
+                .filter(travel -> travel.isInMonth(month))
+                .collect(Collectors.toList());
     }
 
-    public boolean addTravel(Travel travel) {
+    @Transactional
+    public boolean addTravel(final Travel travel) {
         Assert.notNull(travel, "Travel must not be null.");
+
         if (!travelRepository.existsById(travel.getId())) {
             travelRepository.save(travel);
             return true;
@@ -70,11 +72,13 @@ public class TravelService {
         }
     }
 
-    public boolean setDriverForTravelWithId(Long id, Driver driver) {
-        Assert.notNull(id, "ID must not be null.");
+    @Transactional
+    public boolean setDriverForTravelWithId(final long travelId, final Driver driver) {
         Assert.notNull(driver, "Driver must not be null.");
-        if (travelRepository.existsById(id)) {
-            travelRepository.findById(id).ifPresent(t -> t.setDriver(driver));
+
+        if (travelRepository.existsById(travelId)) {
+            travelRepository.findById(travelId)
+                    .ifPresent(t -> t.setDriver(driver));
             return true;
         } else {
             return false;

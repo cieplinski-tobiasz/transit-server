@@ -5,7 +5,6 @@ import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +33,13 @@ public class Route {
 
     public Optional<Leg> getLegForDepartureStop(Stop stop) {
         return legs.stream()
-                .filter(l -> l.getDepartureStop().equals(stop))
+                .filter(leg -> leg.isDepartingFrom(stop))
                 .findFirst();
     }
 
     public Optional<Leg> getLegForArrivalStop(Stop stop) {
         return legs.stream()
-                .filter(l -> l.getArrivalStop().equals(stop))
+                .filter(leg -> leg.isArrivingTo(stop))
                 .findFirst();
     }
 

@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class VehicleService {
-    private VehicleRepository vehicleRepository;
+    private final VehicleRepository vehicleRepository;
 
     @Autowired
     public VehicleService(VehicleRepository vehicleRepository) {
         Assert.notNull(vehicleRepository, "Vehicle repository must not be null.");
+
         this.vehicleRepository = vehicleRepository;
     }
 
@@ -28,13 +28,14 @@ public class VehicleService {
         return vehicleList;
     }
 
-    public Optional<Vehicle> getVehicleById(Long id) {
-        Assert.notNull(id, "ID cannot be null.");
+    public Optional<Vehicle> getVehicleById(final long id) {
         return vehicleRepository.findById(id);
     }
 
-    public boolean addVehicle(Vehicle vehicle) {
+    @Transactional
+    public boolean addVehicle(final Vehicle vehicle) {
         Assert.notNull(vehicle, "Vehicle must not be null");
+
         if (!vehicleRepository.existsById(vehicle.getId())) {
             vehicleRepository.save(vehicle);
             return true;

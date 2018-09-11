@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class LegService {
-    private LegRepository legRepository;
+    private final LegRepository legRepository;
 
     @Autowired
     public LegService(LegRepository legRepository) {
@@ -27,13 +26,14 @@ public class LegService {
         return legList;
     }
 
-    public Optional<Leg> getLegById(Long id) {
-        Assert.notNull(id, "ID cannot be null.");
+    public Optional<Leg> getLegById(final long id) {
         return legRepository.findById(id);
     }
 
-    public boolean addLeg(Leg leg) {
+    @Transactional
+    public boolean addLeg(final Leg leg) {
         Assert.notNull(leg, "Leg cannot be null.");
+
         if (!legRepository.existsById(leg.getId())) {
             legRepository.save(leg);
             return true;
