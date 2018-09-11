@@ -39,7 +39,7 @@ public class Route {
 
     public Optional<Leg> getLegForArrivalStop(Stop stop) {
         return legs.stream()
-                .filter(leg -> leg.isArrivingTo(stop))
+                .filter(leg -> leg.isArrivingAt(stop))
                 .findFirst();
     }
 

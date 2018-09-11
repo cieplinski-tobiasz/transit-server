@@ -43,7 +43,7 @@ public class Leg {
         return this.departureStop.equals(stop);
     }
 
-    public boolean isArrivingTo(Stop stop) {
+    public boolean isArrivingAt(Stop stop) {
         return this.arrivalStop.equals(stop);
     }
 

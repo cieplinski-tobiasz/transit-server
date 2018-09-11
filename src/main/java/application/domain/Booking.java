@@ -24,7 +24,6 @@ public class Booking {
     @OneToOne
     private final Stop to;
 
-    @NotNull
     private final int bookedSeats;
 
     private Booking() {
