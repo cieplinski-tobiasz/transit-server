@@ -8,7 +8,7 @@ class StopSpec extends Specification {
             def uut = new Stop("test name", Mock(Location))
 
         expect:
-        !uut.description.isPresent()
+        !uut.description.present
     }
 
     def "getDescription should return an optional with description given description is not null"() {
@@ -19,7 +19,7 @@ class StopSpec extends Specification {
         def result = uut.description
 
         then:
-        result.isPresent()
+        result.present
         result.get() == "description"
     }
 }

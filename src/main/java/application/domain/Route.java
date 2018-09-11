@@ -1,6 +1,6 @@
 package application.domain;
 
-import application.exceptions.NoSuchSubRouteException;
+import application.exceptions.NoSuchSubRoute;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
@@ -43,15 +43,15 @@ public class Route {
                 .findFirst();
     }
 
-    public Route makeSubRoute(Stop departure, Stop arrival) throws NoSuchSubRouteException {
+    public Route makeSubRoute(Stop departure, Stop arrival) throws NoSuchSubRoute {
         int departureIndex = legs.indexOf(getLegForDepartureStop(departure)
-                .orElseThrow(NoSuchSubRouteException::new));
+                .orElseThrow(NoSuchSubRoute::new));
 
         int arrivalIndex = legs.indexOf(getLegForArrivalStop(arrival)
-                .orElseThrow(NoSuchSubRouteException::new));
+                .orElseThrow(NoSuchSubRoute::new));
 
         if (departureIndex == -1 || arrivalIndex == -1 || departureIndex > arrivalIndex) {
-            throw new NoSuchSubRouteException();
+            throw new NoSuchSubRoute();
         }
 
         return new Route(legs.subList(departureIndex, arrivalIndex + 1));

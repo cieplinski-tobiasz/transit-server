@@ -57,7 +57,6 @@ public class Leg {
         if (!departureStop.equals(leg.departureStop)) return false;
         if (!arrivalStop.equals(leg.arrivalStop)) return false;
         return distance.equals(leg.distance);
-
     }
 
     @Override

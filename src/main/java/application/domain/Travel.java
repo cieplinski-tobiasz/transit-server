@@ -1,6 +1,6 @@
 package application.domain;
 
-import application.exceptions.NoSuchSubRouteException;
+import application.exceptions.NoSuchSubRoute;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -58,14 +58,14 @@ public class Travel {
                 .collect(Collectors.toMap(Function.identity(), value -> vehicle.getCapacity()));
     }
 
-    public int availableSeatsRemaining(Stop departure, Stop arrival) throws NoSuchSubRouteException {
+    public int availableSeatsRemaining(Stop departure, Stop arrival) throws NoSuchSubRoute {
         return timetable.getRoute()
                 .makeSubRoute(departure, arrival)
                 .getLegs()
                 .stream()
                 .map(availableSeats::get)
                 .min(Comparator.naturalOrder())
-                .orElseThrow(NoSuchSubRouteException::new);
+                .orElseThrow(NoSuchSubRoute::new);
     }
 
     public boolean addBooking(Booking booking) {
@@ -77,7 +77,7 @@ public class Travel {
             } else {
                 return false;
             }
-        } catch (NoSuchSubRouteException e) {
+        } catch (NoSuchSubRoute e) {
             return false;
         }
     }
@@ -131,7 +131,7 @@ public class Travel {
         try {
             Route subRoute = timetable.getRoute().makeSubRoute(departureStop, arrivalStop);
             subRoute.getLegs().forEach(l -> availableSeats.put(l, availableSeats.get(l) + seats));
-        } catch (NoSuchSubRouteException e) {
+        } catch (NoSuchSubRoute e) {
             // asserting no exception
         }
     }

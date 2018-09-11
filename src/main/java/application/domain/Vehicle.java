@@ -45,7 +45,6 @@ public class Vehicle {
 
         if (capacity != vehicle.capacity) return false;
         return name.equals(vehicle.name);
-
     }
 
     @Override
